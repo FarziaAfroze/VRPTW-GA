@@ -13,6 +13,34 @@ public class Vertex {
     private int index;
     private int coord_x;
     private int coord_y;
+    private int quantity;
+    private int arrivalTime;
+    private TimeWindow timeWindow;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public int getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+    private int waitingTime;
 
     public Vertex(int index, int coord_x, int coord_y) {
         this.index = index;

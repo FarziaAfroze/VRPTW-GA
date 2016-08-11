@@ -5,11 +5,8 @@
  */
 package vrptw;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,16 +20,21 @@ public class VRPTW {
     int T ;// number of vehicles
     int vehicleCapacity;
     ArrayList<Vertex> vertices;
-    /**
-     * @param args the command line arguments
-     */
+    ArrayList<Vehicle> vehicles;
+    ArrayList<Edge> edges;
+    
+    public VRPTW(){
+        vertices = new ArrayList<Vertex>() ;
+        vehicles =  new ArrayList<Vehicle>();
+    }
+    
     void readInput(String filename){
         String text = null;
         int input,index,x,y,start,end;
         System.out.println("Reading Dataset...");
         
         File file = new File(filename);
-        Scanner scanner;
+        Scanner scanner = null;
         try {
             scanner = new Scanner(file);
             text = scanner.next();
@@ -42,10 +44,10 @@ public class VRPTW {
             for(int i = 0;i<4;i++)text = scanner.nextLine();
 
             T = scanner.nextInt();
-            System.out.println("Number of Vehicles: "+ T);
+//            System.out.println("Number of Vehicles: "+ T);
             
             vehicleCapacity = scanner.nextInt();
-            System.out.println("Capacity of Vehicles: "+ vehicleCapacity);
+//            System.out.println("Capacity of Vehicles: "+ vehicleCapacity);
             
             //skip lines
             for(int i = 0;i<4;i++)text = scanner.nextLine();
@@ -63,47 +65,61 @@ public class VRPTW {
                 v.setTimeWindow(t);
              
                 v.setServiceTime(scanner.nextInt());
+                vertices.add(v);
+                
                 text = scanner.nextLine();
-                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
+//                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
             }
+            
+            System.out.println("-------------------------------------------");
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VRPTW.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            scanner.close();
+            
         }
+        
 
-//        BufferedReader reader = null;
-//        
-//        try {
-//            reader = new BufferedReader(new FileReader(file));
-//            text = reader.readLine();
-//            System.out.println("Dataset name: "+ text);
-//            text =  reader.readLine();//blank line
-//            text =  reader.readLine();//VEHICLE
-//            text =  reader.readLine();//NUMBER     CAPACITY
-//            T = reader.read
-//            
-//            while ((text = reader.readLine()) != null) {
-//                System.out.println(text);
-////                list.add(Integer.parseInt(text));
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (reader != null) {
-//                    reader.close();
-//                }
-//            } catch (IOException e) {
-//            }
-//        }
+    }
+    
+    void initVehicles(){
+        
+        for(int i = 0;i<T;i++)
+        {
+           Vehicle v = new Vehicle();
+           v.setIndex(i);
+           v.setCapacity(vehicleCapacity);
+           vehicles.add(v);
+        }
+    }
+    
+    void initEdges(){
+        for(int i  = 0; i< vertices.size() ;i++){
+            for(int j= i+1;j<vertices.size();j++){
+                System.out.println("creating Edge:("+i+","+j+")");
+                
+                //calculate cost of vertex i and vertex j
+                Vertex start = vertices.get(i);
+                Vertex end = vertices.get(j);
+                
+                //distance = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+                double distance = Math.sqrt(
+                        (start.getCoord_x()-end.getCoord_x())*(start.getCoord_x()-end.getCoord_x())
+                      + (start.getCoord_y()-end.getCoord_y())*(start.getCoord_y()-end.getCoord_y()));
+                
+                Edge e = new Edge(start, end, distance);
+                
+            }
+        }
     }
     
     public static void main(String[] args) {
         
            VRPTW vrptw = new VRPTW();
            vrptw.readInput("R101.txt");
+           vrptw.initVehicles();
+           vrptw.initEdges();
 //print out the list
 //        System.out.println(list);
     }

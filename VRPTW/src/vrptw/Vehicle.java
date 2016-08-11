@@ -15,14 +15,25 @@ import vrptw.Vertex;
  * @author DR
  */
 public class Vehicle {
+    private int index;
     private int capacity;
     private ArrayList<Vertex> Route;
-
+    
+    public Vehicle() {}
+    
     public Vehicle(int capacity, ArrayList<Vertex> Route) {
         this.capacity = capacity;
         this.Route = Route;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+    
     public int getCapacity() {
         return capacity;
     }

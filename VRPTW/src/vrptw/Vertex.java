@@ -16,6 +16,23 @@ public class Vertex {
     private int quantity;
     private int arrivalTime;
     private TimeWindow timeWindow;
+    private int serviceTime; 
+
+    public TimeWindow getTimeWindow() {
+        return timeWindow;
+    }
+
+    public void setTimeWindow(TimeWindow timeWindow) {
+        this.timeWindow = timeWindow;
+    }
+
+    public int getServiceTime() {
+        return serviceTime;
+    }
+
+    public void setServiceTime(int serviceTime) {
+        this.serviceTime = serviceTime;
+    }
 
     public int getQuantity() {
         return quantity;

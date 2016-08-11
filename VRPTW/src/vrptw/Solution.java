@@ -6,6 +6,9 @@
 package vrptw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -13,10 +16,11 @@ import java.util.ArrayList;
  */
 public class Solution {
     public ArrayList<Vehicle> vehicles;
+    int totalVertex;
 
-    public Solution() {
-        vehicles = new  ArrayList<Vehicle>() ;
-                
+    public Solution(int totalVertex) {
+        vehicles = new  ArrayList<>() ; 
+        this.totalVertex = totalVertex;
     }
     
     boolean checkConstraints(){
@@ -36,12 +40,32 @@ public class Solution {
         return true;
     }
     boolean uniquenessConstraint(){
-        return false;
+        
+        List<Boolean> isCovered= new ArrayList<Boolean>(Arrays.asList(new Boolean[totalVertex]));
+        Collections.fill(isCovered, Boolean.FALSE);
+        
+        for(Vehicle vehicle : vehicles)
+        {
+            if(vehicle.getIndex() == 0) isCovered.set(0, Boolean.TRUE);
+            else{
+                if(isCovered.get(vehicle.getIndex())== true) 
+                    return false;
+                isCovered.set(vehicle.getIndex(), Boolean.TRUE);
+            }
+                    
+        }
+        
+        for(boolean b :isCovered)
+        {
+            if(!b) return false;
+        }
+        
+         return true;
     }
     boolean timeConstraint(){
         for(Vehicle vehicle : vehicles)
         {
-            if(!vehicle.capacityConstraint()) return false;
+            if(!vehicle.timeConstraint()) return false;
         }
         return true;
     }

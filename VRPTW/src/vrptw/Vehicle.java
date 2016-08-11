@@ -17,13 +17,13 @@ import vrptw.Vertex;
 public class Vehicle {
     private int index;
     private int capacity;
-    private ArrayList<Vertex> Route;
+    private ArrayList<Vertex> route;
     
     public Vehicle() {}
     
     public Vehicle(int capacity, ArrayList<Vertex> Route) {
         this.capacity = capacity;
-        this.Route = Route;
+        this.route = Route;
     }
 
     public int getIndex() {
@@ -43,12 +43,38 @@ public class Vehicle {
     }
 
     public ArrayList<Vertex> getRoute() {
-        return Route;
+        return route;
     }
 
     public void setRoute(ArrayList<Vertex> Route) {
-        this.Route = Route;
+        this.route = Route;
     }
     
+    boolean capacityConstraint(){
+        if(route == null) return false;
+        int totalQuantity = 0;
+        for (Vertex v:route)
+        {
+            if(v.getIndex() != 0) totalQuantity += v.getQuantity();
+        }
+        return capacity >= totalQuantity;   
+    }
     
+    boolean timeConstraint(){//ToDo
+        if(route == null) return false;
+        int totalTime = 0;
+        for (Vertex v:route)
+        {
+            if(v.getIndex() != 0) {
+            
+            }
+        }
+        return false;   
+    }
+    
+    boolean routesStartAndEndAtDepot(){
+        if(route == null) return false;
+        return (route.get(0).getIndex() == 0 ) && 
+                (route.get(route.size()-1).getIndex() == 0 );
+    }
 }

@@ -12,9 +12,9 @@ package vrptw;
 public class Edge {
     private Vertex start;
     private Vertex end;
-    int cost;
+    double cost;
 
-    public Edge(Vertex start, Vertex end, int cost) {
+    public Edge(Vertex start, Vertex end, double cost) {
         this.start = start;
         this.end = end;
         this.cost = cost;
@@ -36,11 +36,11 @@ public class Edge {
         this.end = end;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
     

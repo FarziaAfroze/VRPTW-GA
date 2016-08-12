@@ -207,6 +207,40 @@ public class VRPTW {
     
     Solution mutate(Solution s)
     {
+        for(Vehicle vehicle : s.vehicles){
+            for(Vertex vertex: vehicle.getRoute())
+            {
+                if(vertex.getIndex() > 0) // we wouldn't mutate depot
+                {
+                    //mutate this vetex with probabuility p
+                    int p = randInt(1, 100);
+                    if(p>50)
+                    {
+                        //mutate:
+                        //save the vertex position
+                        int vertexPosition = vehicle.getRoute().indexOf(vertex);
+                        
+                        // take a random vertex and place it at vertexPosition
+                        int newVertexIndex = randInt(1,N);
+                        Vertex newVertex = vertices.get(newVertexIndex);
+                        
+                        //if the new vertex is not already present in route
+                        if(vehicle.getRoute().indexOf(newVertex)== -1 ){
+                            //2.remove this vertex from route
+                            vehicle.getRoute().remove(vertex);
+                            //replace it with new vertex
+                            vehicle.getRoute().set(vertexPosition, 
+                                vertices.get(newVertexIndex));
+                        }
+                            
+                        
+                    }
+                }
+            }
+        }
+        
+        //handle error here
+                
         return null;
     }
     

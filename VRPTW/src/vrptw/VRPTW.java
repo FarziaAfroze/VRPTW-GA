@@ -138,7 +138,7 @@ public class VRPTW {
         for(Vertex v : vertices ){ 
             if(v.getIndex() > 0){  // ignore vertex at 0 which is depot
                while(true){
-                    int i= randInt(0, T-1);                
+                    int i= randInt(1, T-1);                
                     Vehicle vh = solution.vehicles.get(i);
                     vh.getRoute().add(v);
 //                    solution.vehicles.add(vh);
@@ -291,7 +291,7 @@ public class VRPTW {
     }
     
     Solution geneticAlgorithm(){
-        int populationSize = 100, totalIteration = 10;
+        int populationSize = 5, totalIteration = 10;
         ArrayList<Solution> P = new ArrayList<Solution>();
         
         //generate the first random population
@@ -338,7 +338,7 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
-        System.out.println(vrptw.generateRandomIndividual());
+        //System.out.println(vrptw.generateRandomIndividual());
         vrptw.geneticAlgorithm();
     }
 

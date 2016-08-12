@@ -250,7 +250,7 @@ public class VRPTW {
        //duplicate
        int size = solution.vehicles.size();
        boolean arr[] = new boolean[size];
-       for(Vertex v:vh.getRoute()){
+       for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
            arr[v.getIndex()] = true;
        }
        for(Vehicle vehicle: solution.vehicles){

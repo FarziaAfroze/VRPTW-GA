@@ -161,6 +161,24 @@ public class VRPTW {
         return null;        
         
     }
+    
+    Solution selectWithReplacement(ArrayList<Solution> solutions){
+        int t = randInt(3,10) ;// random tournamnet size
+        Solution best = getRandomIndividual(solutions);
+        for(int i=2;i<t;i++){
+            Solution next = getRandomIndividual(solutions);
+            if(next.fitness() > best.fitness()){
+                best = next;
+            }
+        }
+        return best;
+    }
+    
+    Solution getRandomIndividual(ArrayList<Solution> solutions){
+        int t = randInt(0,solutions.size()-1) ;
+        return solutions.get(t);
+    }
+    
     int randInt(int min, int max) {   
         Random rand =  new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;

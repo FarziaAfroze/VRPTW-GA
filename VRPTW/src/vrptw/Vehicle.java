@@ -64,20 +64,11 @@ public class Vehicle {
     
     boolean timeConstraint(){
         if(route == null) return false;
-<<<<<<< HEAD
+
         Vertex v = route.get(route.size()-1);
-        if(v.getArrivalTime() > v.getTimeWindow().getEndTime())
+        if(v.getArrivalTime() > v.getTimeWindow().getEndTime())// check if the vehicle returns to depot before the endTime of depot
                 return false;
-=======
-//        for(Vertex v:route){
-//            if(v.getArrivalTime() > v.getTimeWindow().getEndTime())
-//                return false;
-//        }
-        Vertex v = route.get(route.size()-1);
-        if(v.getArrivalTime() > v.getTimeWindow().getEndTime()){ // check if the vehicle returns to depot before the endTime of depot
-            return false;
-        }
->>>>>>> 4b3fe820a42d363693b28e4dcec38a4d6a1f6976
+
         return true;
     }
     

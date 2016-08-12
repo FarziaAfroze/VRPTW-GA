@@ -209,36 +209,7 @@ public class VRPTW {
     }
     
     Solution handleError(Solution solution, Vehicle vh){
-        boolean[] arr = new boolean[vh.getRoute().size()];
-        for(Vertex v : vh.getRoute()){
-            arr[v.getIndex()] = true;
-        }       
-        for(Vehicle vehicle: solution.vehicles){
-            for(Vertex v : vehicle.getRoute()){
-                if(arr[v.getIndex()]){   // the vertex is already covered by the vh
-                    vehicle.getRoute().remove(v);
-                }
-            }
-        }
-
-        int p = randInt(0, solution.vehicles.size()-1);
-        Vehicle paV = solution.vehicles.get(p);     
-        
-        while(true){
-            if(solution.checkConstraints()){
-                break;
-            }
-        }
-        
-        
-        solution.vehicles.remove(paV);
-        solution.vehicles.add(vh);
-        if(solution.checkConstraints()){
-            return solution;
-        }else{
-            
-        }
-        
+       return solution;        
     }
     
     Solution geneticAlgorithm(){

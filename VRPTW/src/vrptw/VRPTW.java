@@ -191,10 +191,12 @@ public class VRPTW {
         int p = randInt(0, 100);
         for(int i=0;i<Pa.vehicles.size();i++){
             if(p > threshold){
-                Vehicle vh = Pa.vehicles.get(i) ; 
+                Vehicle vha = Pa.vehicles.get(i) ; 
+                Vehicle vhb = Pb.vehicles.get(i) ; 
                 Pa.vehicles.set(i, Pb.vehicles.get(i));                
-                Pb.vehicles.set(i, vh);
-                handleError(Pb, vh);
+                Pb.vehicles.set(i, vha);
+                handleError(Pb, vha);
+                handleError(Pa, vhb);
             }
         }
         ArrayList<Solution> solutions = new ArrayList<Solution>();
@@ -209,6 +211,9 @@ public class VRPTW {
     }
     
     Solution handleError(Solution solution, Vehicle vh){
+       for(){
+           
+       } 
        return solution;        
     }
     

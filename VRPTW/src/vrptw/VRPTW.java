@@ -187,7 +187,7 @@ public class VRPTW {
     }
     
     int randInt(int min, int max) {
-        System.out.println("Max :  "+max+"   Min:"+ min);
+//        System.out.println("Max :  "+max+"   Min:"+ min);
         Random rand =  new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
@@ -260,7 +260,7 @@ public class VRPTW {
        boolean arr[] = new boolean[size];
        for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
            arr[v.getIndex()] = true;
-       }
+       }       
        for(Vehicle vehicle: solution.vehicles){
            if(vh.getIndex() != vehicle.getIndex()){
                 for(Vertex v : vehicle.getRoute()){

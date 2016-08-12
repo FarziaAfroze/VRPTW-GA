@@ -248,13 +248,18 @@ public class VRPTW {
        //duplicate
        int size = solution.vehicles.size();
        boolean arr[] = new boolean[size];
+       for(Vertex v:vh.getRoute()){
+           arr[v.getIndex()] = true;
+       }
        for(Vehicle vehicle: solution.vehicles){
-           for(Vertex v : vehicle.getRoute()){
-               if(!arr[v.getIndex()]){
-                   arr[v.getIndex()] = true;
-               }else{
-                   vehicle.getRoute().remove(v);
-               }             
+           if(vh.getIndex() != vehicle.getIndex()){
+                for(Vertex v : vehicle.getRoute()){
+                    if(!arr[v.getIndex()]){
+                        arr[v.getIndex()] = true;
+                    }else{
+                        vehicle.getRoute().remove(v);
+                    }             
+                }
            }
        }       
        //missing
@@ -332,7 +337,8 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
-        System.out.println(vrptw.generateRandomIndividual());  
+        System.out.println(vrptw.generateRandomIndividual());
+        vrptw.geneticAlgorithm();
     }
 
 }

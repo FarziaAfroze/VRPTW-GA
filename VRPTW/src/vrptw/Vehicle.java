@@ -62,14 +62,10 @@ public class Vehicle {
     
     boolean timeConstraint(){//ToDo
         if(route == null) return false;
-        int totalTime = 0;
-        for (Vertex v:route)
-        {
-            if(v.getIndex() != 0) {
-            
-            }
-        }
-        return false;   
+        
+        Vertex finalVertex = route.get(route.size()-1);
+        return finalVertex.getArrivalTime()
+                <= finalVertex.getTimeWindow().getEndTime();
     }
     
     boolean routesStartAndEndAtDepot(){

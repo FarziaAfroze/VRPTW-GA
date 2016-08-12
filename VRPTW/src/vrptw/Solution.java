@@ -75,12 +75,12 @@ public class Solution {
             if(!vehicle.capacityConstraint()) return false;
         }
         return true;
-    } 
+    }   
     
-    double cost(Solution solution){ 
+    double cost(){ 
         double totalTime=0,time=0,penalty,waitingTime;
         Vertex u= null;
-        for(Vehicle vh : solution.vehicles){            
+        for(Vehicle vh : vehicles){            
             time =0;
             for(Vertex v: vh.getRoute()){               
                 if(time == 0){
@@ -88,7 +88,7 @@ public class Solution {
                 }else{                    
                     time += calculateDistance(u, v);
                     v.setArrivalTime(time);
-                    u=v;                    
+                    u = v;                    
                     if(time > v.getTimeWindow().getEndTime()){
                         penalty = time - v.getTimeWindow().getEndTime();
                         time += penalty;
@@ -111,8 +111,8 @@ public class Solution {
         return distance;    
     }
     
-    double fitness(Solution solution){
-        return 1.0 / cost(solution);
+    double fitness(){
+        return 1.0 / cost();
     }
     
     @Override

@@ -304,16 +304,13 @@ public class VRPTW {
     Solution geneticAlgorithm(){
         int populationSize = 4, totalIteration = 10;
         ArrayList<Solution> P = new ArrayList<Solution>();
-        
+
         //generate the first random population
         for(int i =0; i< populationSize;i++){
-            System.out.println("creating individual "+i);
+//            System.out.println("creating individual "+i);
             while(true){
-                System.out.println("trying...");
-                System.out.println("++++++++++++++++++++++++++++++++");
                 Solution s = generateRandomIndividual();
-                System.out.println(s);
-                System.out.println("++++++++++++++++++++++++++++++++");
+//                System.out.println(s);
                 if(s != null)
                 {
                     P.add(s);
@@ -321,7 +318,7 @@ public class VRPTW {
                 }
             } 
         }
-        
+
         Solution best = null;//stores the best solution so far
         
         for(int i = 0; i<totalIteration ; i++){
@@ -331,7 +328,7 @@ public class VRPTW {
                if(best == null || fitness > best.fitness())
                    best = Pi;
            }
-           System.out.println("best: " + best);
+//           System.out.println("best: " + best);
            ArrayList<Solution> Q = new ArrayList<Solution>();
            for(int j = 0;j< populationSize/2;j++ ){
                Solution Pa = selectWithReplacement(P);
@@ -343,6 +340,8 @@ public class VRPTW {
                
                Q.add(Ca);
                Q.add(Cb); 
+//                Q.add(children.get(0));
+//                Q.add(children.get(1));
            }
            P = Q;
         }

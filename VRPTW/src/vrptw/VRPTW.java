@@ -8,9 +8,11 @@ package vrptw;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *
@@ -30,7 +32,7 @@ public class VRPTW {
     
     void readInput(String filename){
         String text = null;
-        int input,index,x,y,start,end;
+        int input,index=0,x,y,start,end;
         System.out.println("Reading Dataset...");
         
         File file = new File(filename);
@@ -70,7 +72,7 @@ public class VRPTW {
                 text = scanner.nextLine();
 //                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
             }
-            
+            generateRandomIndividual();
             System.out.println("-------------------------------------------");
             
         } catch (FileNotFoundException ex) {
@@ -112,14 +114,47 @@ public class VRPTW {
                 
             }
         }
+    }  
+    
+    void generateRandomIndividual(){ 
+        int max = 10,min =1, threshold =4;
+        Vehicle vehicle;
+        ArrayList<Vertex> tmpVertices;
+        ArrayList<Vehicle> tmpVehicles = new ArrayList<Vehicle>();
+       
+        for(Vehicle vh : vehicles){            
+            tmpVertices = new ArrayList<Vertex>() ;
+            for(Vertex v : vertices ){             
+                if(randInt (min, max)>threshold){                    
+                    tmpVertices.add(v);
+                    break;
+                }
+            }            
+            vehicle = new Vehicle(vh.getCapacity(),tmpVertices) ;
+            tmpVehicles.add(vehicle);
+            Solution solution = new Solution(tmpVehicles, T);
+            if(solution.checkConstraints()){
+               vh.setRoute(tmpVertices);
+            }else{
+               tmpVehicles.remove(vehicle);
+            }            
+        }
+        
+    }
+    int randInt(int min, int max) {  
+        Random rand = null;  
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
     
     public static void main(String[] args) {
+        System.out.print("Hello");
+        VRPTW vrptw = new VRPTW();
+        vrptw.readInput("R101.txt");
+        vrptw.initVehicles();
+        vrptw.initEdges();
         
-           VRPTW vrptw = new VRPTW();
-           vrptw.readInput("R101.txt");
-           vrptw.initVehicles();
-           vrptw.initEdges();
+        
 //print out the list
 //        System.out.println(list);
     }

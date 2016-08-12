@@ -20,6 +20,7 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
  */
 public class VRPTW {
     int T ;// number of vehicles
+    int N; // number of vertices
     int vehicleCapacity;
     ArrayList<Vertex> vertices;
     ArrayList<Vehicle> vehicles;
@@ -72,6 +73,7 @@ public class VRPTW {
                 text = scanner.nextLine();
 //                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
             }
+            N=index;
             generateRandomIndividual();
             System.out.println("-------------------------------------------");
             
@@ -116,29 +118,41 @@ public class VRPTW {
         }
     }  
     
-    void generateRandomIndividual(){ 
+    Solution generateRandomIndividual(){ 
         int max = 10,min =1, threshold =4;
-        Vehicle vehicle;
-        ArrayList<Vertex> tmpVertices;
-        ArrayList<Vehicle> tmpVehicles = new ArrayList<Vehicle>();
+//        Vehicle vehicle;
+//        ArrayList<Vertex> tmpVertices;
+//        ArrayList<Vehicle> tmpVehicles = new ArrayList<Vehicle>();
        
-        for(Vehicle vh : vehicles){            
-            tmpVertices = new ArrayList<Vertex>() ;
-            for(Vertex v : vertices ){             
-                if(randInt (min, max)>threshold){                    
-                    tmpVertices.add(v);
-                    break;
-                }
-            }            
-            vehicle = new Vehicle(vh.getCapacity(),tmpVertices) ;
-            tmpVehicles.add(vehicle);
-            Solution solution = new Solution(tmpVehicles, T);
-            if(solution.checkConstraints()){
-               vh.setRoute(tmpVertices);
-            }else{
-               tmpVehicles.remove(vehicle);
-            }            
+        for(Vertex v : vertices ){      
+               int i= randInt(1, T);                
+               Vehicle vh = vehicles.get(i);
+               Solution solution = new Solution(N);
+               solution.vehicles.add(vh);
+               if(solution.capacityConstraint() && solution.timeConstraint()){
+                   vh.getRoute().add(v);
+               }  
         }
+        Solution solution = new Solution(N);
+        solution.vehicles = vehicles ;
+        return solution ;
+//        for(Vehicle vh : vehicles){            
+//            tmpVertices = new ArrayList<Vertex>() ;
+//            for(Vertex v : vertices ){             
+//                if(randInt (min, max)>threshold){                    
+//                    tmpVertices.add(v);
+//                    break;
+//                }
+//            }            
+//            vehicle = new Vehicle(vh.getCapacity(),tmpVertices) ;
+//            tmpVehicles.add(vehicle);
+//            Solution solution = new Solution(tmpVehicles, T);
+//            if(solution.checkConstraints()){
+//               vh.setRoute(tmpVertices);
+//            }else{
+//               tmpVehicles.remove(vehicle);
+//            }            
+//        }
         
     }
     int randInt(int min, int max) {  

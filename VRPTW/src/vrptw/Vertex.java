@@ -14,9 +14,9 @@ public class Vertex {
     private int coord_x;
     private int coord_y;
     private int quantity;
-    private int arrivalTime;
+    private double arrivalTime;
     private TimeWindow timeWindow;
-    private int serviceTime; 
+    private double serviceTime; 
 
     public TimeWindow getTimeWindow() {
         return timeWindow;
@@ -26,11 +26,11 @@ public class Vertex {
         this.timeWindow = timeWindow;
     }
 
-    public int getServiceTime() {
+    public double getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(int serviceTime) {
+    public void setServiceTime(double serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -42,22 +42,22 @@ public class Vertex {
         this.quantity = quantity;
     }
 
-    public int getArrivalTime() {
+    public double getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(int arrivalTime) {
+    public void setArrivalTime(double arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public int getWaitingTime() {
-        return waitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
-    }
-    private int waitingTime;
+//    public int getWaitingTime() {
+//        return waitingTime;
+//    }
+//
+//    public void setWaitingTime(int waitingTime) {
+//        this.waitingTime = waitingTime;
+//    }
+//    private int waitingTime;
 
     public Vertex(int index, int coord_x, int coord_y) {
         this.index = index;

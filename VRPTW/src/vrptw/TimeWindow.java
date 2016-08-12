@@ -10,27 +10,27 @@ package vrptw;
  * @author DR
  */
 public class TimeWindow {
-    private int startTime;
-    private int endTime;
+    private double startTime;
+    private double endTime;
 
-    public TimeWindow(int startTime, int endTime) {
+    public TimeWindow(double startTime, double endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public int getStartTime() {
+    public double getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(double startTime) {
         this.startTime = startTime;
     }
 
-    public int getEndTime() {
+    public double getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(double endTime) {
         this.endTime = endTime;
     }
 

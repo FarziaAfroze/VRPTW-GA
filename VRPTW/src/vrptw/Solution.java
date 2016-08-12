@@ -18,8 +18,8 @@ public class Solution {
     public ArrayList<Vehicle> vehicles;
     int totalVertex;
 
-    public Solution(int totalVertex) {
-        vehicles = new  ArrayList<>() ; 
+    public Solution(ArrayList<Vehicle> vehicles, int totalVertex) {
+        this.vehicles = vehicles ; 
         this.totalVertex = totalVertex;
     }
     

@@ -246,7 +246,43 @@ public class VRPTW {
         return null;
     }
     
-    Solution handleError(Solution solution, Vehicle vh){     
+    Solution handleError(Solution solution, Vehicle vh){ 
+       //duplicate
+       int size = solution.vehicles.size();
+       boolean arr[] = new boolean[size];
+       for(Vehicle vehicle: solution.vehicles){
+           for(Vertex v : vehicle.getRoute()){
+               if(!arr[v.getIndex()]){
+                   arr[v.getIndex()] = true;
+               }else{
+                   vehicle.getRoute().remove(v);
+               }             
+           }
+       }       
+       //missing
+       boolean flag = false;
+       for(Vertex v: vh.getRoute()){
+           for(Vehicle vehicle:solution.vehicles){
+                if(solution.vehicles.indexOf(v) != -1){                   
+                   flag = true;
+                   break;
+                }
+           }
+           if(!flag){
+               while(true){
+                    int p =randInt(0, size-1);
+                    Vehicle vha = solution.vehicles.get(p);
+                    Vertex depot = vha.getRoute().get(p);
+                    vha.getRoute().remove(depot);
+                    vha.getRoute().add(v);
+                    vha.getRoute().add(depot);
+
+                    if(solution.checkConstraints()){
+                        break;
+                    }
+               }
+           }
+       }
        return solution;        
     }
     

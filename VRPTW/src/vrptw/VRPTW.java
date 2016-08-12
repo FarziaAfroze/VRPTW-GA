@@ -187,7 +187,20 @@ public class VRPTW {
     
     ArrayList<Solution> crossover(Solution Pa, Solution Pb)
     {
-        return null;
+        int threshold = 40;
+        int p = randInt(0, 100);
+        for(int i=0;i<Pa.vehicles.size();i++){
+            if(p > threshold){
+                Vehicle vh = Pa.vehicles.get(i) ; 
+                Pa.vehicles.set(i, Pb.vehicles.get(i));                
+                Pb.vehicles.set(i, vh);
+                handleError(Pb, vh);
+            }
+        }
+        ArrayList<Solution> solutions = new ArrayList<Solution>();
+        solutions.add(Pa);
+        solutions.add(Pb);
+        return solutions;
     }
     
     Solution mutate(Solution s)
@@ -196,7 +209,36 @@ public class VRPTW {
     }
     
     Solution handleError(Solution solution, Vehicle vh){
-        return solution;
+        boolean[] arr = new boolean[vh.getRoute().size()];
+        for(Vertex v : vh.getRoute()){
+            arr[v.getIndex()] = true;
+        }       
+        for(Vehicle vehicle: solution.vehicles){
+            for(Vertex v : vehicle.getRoute()){
+                if(arr[v.getIndex()]){   // the vertex is already covered by the vh
+                    vehicle.getRoute().remove(v);
+                }
+            }
+        }
+
+        int p = randInt(0, solution.vehicles.size()-1);
+        Vehicle paV = solution.vehicles.get(p);     
+        
+        while(true){
+            if(solution.checkConstraints()){
+                break;
+            }
+        }
+        
+        
+        solution.vehicles.remove(paV);
+        solution.vehicles.add(vh);
+        if(solution.checkConstraints()){
+            return solution;
+        }else{
+            
+        }
+        
     }
     
     Solution geneticAlgorithm(){

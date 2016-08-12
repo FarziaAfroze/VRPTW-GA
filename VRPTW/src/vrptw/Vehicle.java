@@ -19,7 +19,9 @@ public class Vehicle {
     private int capacity;
     private ArrayList<Vertex> route;
     
-    public Vehicle() {}
+    public Vehicle() {
+        route = new ArrayList<Vertex>();
+    }
     
     public Vehicle(int capacity, ArrayList<Vertex> Route) {
         this.capacity = capacity;

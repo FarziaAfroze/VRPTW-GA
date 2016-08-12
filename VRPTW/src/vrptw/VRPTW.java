@@ -29,6 +29,7 @@ public class VRPTW {
     public VRPTW(){
         vertices = new ArrayList<Vertex>() ;
         vehicles =  new ArrayList<Vehicle>();
+        edges =  new ArrayList<Edge>();
     }
     
     void readInput(String filename){
@@ -71,10 +72,10 @@ public class VRPTW {
                 vertices.add(v);
                 
                 text = scanner.nextLine();
-//                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
+                System.out.println(v + " " + v.getTimeWindow()+ " Service time:"+ v.getServiceTime());
             }
             N=index;
-            generateRandomIndividual();
+//            generateRandomIndividual();
             System.out.println("-------------------------------------------");
             
         } catch (FileNotFoundException ex) {
@@ -88,7 +89,7 @@ public class VRPTW {
     }
     
     void initVehicles(){
-        
+//        System.out.println("size "+vehicles.size());
         for(int i = 0;i<T;i++)
         {
            Vehicle v = new Vehicle();
@@ -96,12 +97,15 @@ public class VRPTW {
            v.setCapacity(vehicleCapacity);
            vehicles.add(v);
         }
+//        System.out.println("size "+vehicles.size());
+        System.out.println("Initialized "+vehicles.size()+" vehicles.");
+        System.out.println("-------------------------------------------");
     }
     
     void initEdges(){
         for(int i  = 0; i< vertices.size() ;i++){
             for(int j= i+1;j<vertices.size();j++){
-                System.out.println("creating Edge:("+i+","+j+")");
+//                System.out.println("creating Edge:("+i+","+j+")");
                 
                 //calculate cost of vertex i and vertex j
                 Vertex start = vertices.get(i);
@@ -113,28 +117,35 @@ public class VRPTW {
                       + (start.getCoord_y()-end.getCoord_y())*(start.getCoord_y()-end.getCoord_y()));
                 
                 Edge e = new Edge(start, end, distance);
-                
+                edges.add(e);
             }
         }
+        System.out.println("created "+edges.size()+" Edges.");
+        System.out.println("-------------------------------------------");
+        
     }  
     
     Solution generateRandomIndividual(){
         
-        Solution solution = new Solution(N);  
+        Solution solution = new Solution(N); 
+        solution.vehicles = vehicles;
+//        System.out.println("solution.vehicles.size(): "+solution.vehicles.size());
+        
         for(Vehicle vh : solution.vehicles){
             vh.getRoute().add(vertices.get(0)); //adding depot to all vehicles route as starting point
         }
+        
         for(Vertex v : vertices ){ 
             if(v.getIndex() > 0){  // ignore vertex at 0 which is depot
                while(true){
                     int i= randInt(0, T-1);                
-                    Vehicle vh = vehicles.get(i);
+                    Vehicle vh = solution.vehicles.get(i);
                     vh.getRoute().add(v);
-                    solution.vehicles.add(vh);
+//                    solution.vehicles.add(vh);
                     if( (solution.capacityConstraint() && solution.timeConstraint())){
                        break;
                     } else{
-                        solution.vehicles.remove(vh);
+                        solution.vehicles.get(i).getRoute().remove(v);
                     }
                }
             }
@@ -143,15 +154,15 @@ public class VRPTW {
         for(Vehicle vh : solution.vehicles){
             vh.getRoute().add(vertices.get(0)); //adding depot to all vehicles route
         }
-        
+//        System.out.println(solution.vehicles.size());
         if(solution.checkConstraints()){
             return solution ;
         }
         return null;        
         
     }
-    int randInt(int min, int max) {  
-        Random rand = null;  
+    int randInt(int min, int max) {   
+        Random rand =  new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
     }
@@ -162,6 +173,7 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
+        System.out.println(vrptw.generateRandomIndividual());
         
         
 //print out the list

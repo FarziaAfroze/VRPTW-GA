@@ -226,8 +226,7 @@ public class VRPTW {
                         
                         //if the new vertex is not already present in route
                         if(vehicle.getRoute().indexOf(newVertex)== -1 ){
-                            //2.remove this vertex from route
-                            vehicle.getRoute().remove(vertex);
+                            
                             //replace it with new vertex
                             vehicle.getRoute().set(vertexPosition, 
                                 vertices.get(newVertexIndex));
@@ -237,6 +236,9 @@ public class VRPTW {
                     }
                 }
             }
+            
+            handleError(s,vehicle);
+            
         }
         
         //handle error here

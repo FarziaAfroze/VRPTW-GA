@@ -193,10 +193,10 @@ public class VRPTW {
             if(p > threshold){
                 Vehicle vha = Pa.vehicles.get(i) ; 
                 Vehicle vhb = Pb.vehicles.get(i) ; 
-                Pa.vehicles.set(i, Pb.vehicles.get(i));                
+                Pa.vehicles.set(i, vhb);                
                 Pb.vehicles.set(i, vha);
-                handleError(Pb, vha);
-                handleError(Pa, vhb);
+                handleError(Pa, vha);
+                handleError(Pb, vhb);
             }
         }
         ArrayList<Solution> solutions = new ArrayList<Solution>();
@@ -210,7 +210,7 @@ public class VRPTW {
         return null;
     }
     
-    Solution handleError(Solution solution, Vehicle vh){       
+    Solution handleError(Solution solution, Vehicle vh){     
        return solution;        
     }
     

@@ -118,41 +118,36 @@ public class VRPTW {
         }
     }  
     
-    Solution generateRandomIndividual(){ 
-        int max = 10,min =1, threshold =4;
-//        Vehicle vehicle;
-//        ArrayList<Vertex> tmpVertices;
-//        ArrayList<Vehicle> tmpVehicles = new ArrayList<Vehicle>();
-       
-        for(Vertex v : vertices ){      
-               int i= randInt(1, T);                
-               Vehicle vh = vehicles.get(i);
-               Solution solution = new Solution(N);
-               solution.vehicles.add(vh);
-               if(solution.capacityConstraint() && solution.timeConstraint()){
-                   vh.getRoute().add(v);
-               }  
+    Solution generateRandomIndividual(){
+        
+        Solution solution = new Solution(N);  
+        for(Vehicle vh : solution.vehicles){
+            vh.getRoute().add(vertices.get(0)); //adding depot to all vehicles route as starting point
         }
-        Solution solution = new Solution(N);
-        solution.vehicles = vehicles ;
-        return solution ;
-//        for(Vehicle vh : vehicles){            
-//            tmpVertices = new ArrayList<Vertex>() ;
-//            for(Vertex v : vertices ){             
-//                if(randInt (min, max)>threshold){                    
-//                    tmpVertices.add(v);
-//                    break;
-//                }
-//            }            
-//            vehicle = new Vehicle(vh.getCapacity(),tmpVertices) ;
-//            tmpVehicles.add(vehicle);
-//            Solution solution = new Solution(tmpVehicles, T);
-//            if(solution.checkConstraints()){
-//               vh.setRoute(tmpVertices);
-//            }else{
-//               tmpVehicles.remove(vehicle);
-//            }            
-//        }
+        for(Vertex v : vertices ){ 
+            if(v.getIndex() > 0){  // ignore vertex at 0 which is depot
+               while(true){
+                    int i= randInt(0, T-1);                
+                    Vehicle vh = vehicles.get(i);
+                    vh.getRoute().add(v);
+                    solution.vehicles.add(vh);
+                    if( (solution.capacityConstraint() && solution.timeConstraint())){
+                       break;
+                    } else{
+                        solution.vehicles.remove(vh);
+                    }
+               }
+            }
+        }
+        
+        for(Vehicle vh : solution.vehicles){
+            vh.getRoute().add(vertices.get(0)); //adding depot to all vehicles route
+        }
+        
+        if(solution.checkConstraints()){
+            return solution ;
+        }
+        return null;        
         
     }
     int randInt(int min, int max) {  

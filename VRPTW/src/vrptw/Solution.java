@@ -75,6 +75,20 @@ public class Solution {
             if(!vehicle.capacityConstraint()) return false;
         }
         return true;
+    } 
+    
+    @Override
+    public String toString() {
+        String solution="";
+        for(Vehicle vh : vehicles){
+            solution += vh.getIndex() + "  : "; 
+            for(Vertex v : vh.getRoute()){
+               solution += v + "->";   
+            }
+            solution += "\n";
+        }
+        return solution;
     }
+    
 }
 

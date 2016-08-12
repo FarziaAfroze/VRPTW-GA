@@ -195,6 +195,10 @@ public class VRPTW {
         return null;
     }
     
+    Solution handleError(Solution solution, Vehicle vh){
+        return solution;
+    }
+    
     Solution geneticAlgorithm(){
         int populationSize = 100, totalIteration = 10;
         ArrayList<Solution> P = new ArrayList<Solution>();

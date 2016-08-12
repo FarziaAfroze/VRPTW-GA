@@ -128,7 +128,6 @@ public class VRPTW {
     Solution generateRandomIndividual(){
         
         Solution solution = new Solution(N); 
-
         for(int i=0; i < T;i++)
         {
             Vehicle vehicle = new Vehicle();
@@ -136,7 +135,6 @@ public class VRPTW {
             vehicle.setCapacity(vehicleCapacity);
             solution.vehicles.add(vehicle);
         }
-
 
 //        System.out.println("solution.vehicles.size(): "+solution.vehicles.size());
         
@@ -188,7 +186,8 @@ public class VRPTW {
         return solutions.get(t);
     }
     
-    int randInt(int min, int max) {   
+    int randInt(int min, int max) {
+        System.out.println("Max :  "+max+"   Min:"+ min);
         Random rand =  new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
@@ -265,11 +264,13 @@ public class VRPTW {
        for(Vehicle vehicle: solution.vehicles){
            if(vh.getIndex() != vehicle.getIndex()){
                 for(Vertex v : vehicle.getRoute()){
-                    if(!arr[v.getIndex()]){
-                        arr[v.getIndex()] = true;
-                    }else{
-                        vehicle.getRoute().remove(v);
-                    }             
+                    if(v.getIndex() != 0){
+                        if(!arr[v.getIndex()]){
+                            arr[v.getIndex()] = true;
+                        }else{
+                            vehicle.getRoute().remove(v);
+                        }    
+                    }
                 }
            }
        }       

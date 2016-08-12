@@ -77,6 +77,25 @@ public class Solution {
         return true;
     }   
     
+    Solution selectWithReplacement(ArrayList<Solution> solutions){
+//        int t = randInt(3,10) ;// random number to tweak an individual
+        int t = 5;
+        Solution best = getRandomIndividual(solutions);
+        for(int i=2;i<t;i++){
+            Solution next = getRandomIndividual(solutions);
+            if(next.fitness() > best.fitness()){
+                best = next;
+            }
+        }
+        return best;
+    }
+    
+    Solution getRandomIndividual(ArrayList<Solution> solutions){
+//        int t = randInt(0,solutions.size()-1) ;// random number to tweak an individual
+        int t=5;
+        return solutions.get(t);
+    }
+    
     double cost(){ 
         double totalTime=0,time=0,penalty,waitingTime;
         Vertex u= null;

@@ -173,11 +173,7 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
-        System.out.println(vrptw.generateRandomIndividual());
-        
-        
-//print out the list
-//        System.out.println(list);
+        System.out.println(vrptw.generateRandomIndividual());  
     }
 
 }

@@ -197,16 +197,18 @@ public class VRPTW {
     {
         int threshold = 40;
         int p = randInt(0, 100);
+        Vehicle vha=null,vhb=null;
         for(int i=0;i<Pa.vehicles.size();i++){
             if(p > threshold){
-                Vehicle vha = Pa.vehicles.get(i) ; 
-                Vehicle vhb = Pb.vehicles.get(i) ; 
+                vha = Pa.vehicles.get(i) ; 
+                vhb = Pb.vehicles.get(i) ; 
                 Pa.vehicles.set(i, vhb);                
-                Pb.vehicles.set(i, vha);
+                Pb.vehicles.set(i, vha); 
                 handleError(Pa, vha);
                 handleError(Pb, vhb);
             }
         }
+        
         ArrayList<Solution> solutions = new ArrayList<Solution>();
         solutions.add(Pa);
         solutions.add(Pb);
@@ -257,23 +259,26 @@ public class VRPTW {
     Solution handleError(Solution solution, Vehicle vh){ 
        //duplicate
        int size = solution.vehicles.size();
-       boolean arr[] = new boolean[size];
+       boolean arr[] = new boolean[size+1];
        for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
            arr[v.getIndex()] = true;
        }
        for(Vehicle vehicle: solution.vehicles){
            if(vh.getIndex() != vehicle.getIndex()){
                 for(Vertex v : vehicle.getRoute()){
+                    System.out.println(" Indexing Problem : Hello  ");
+                    System.out.println(" Indexing Problem :  "+v.getIndex());
                     if(v.getIndex() != 0){
                         if(!arr[v.getIndex()]){
-                            arr[v.getIndex()] = true;
+                            arr[v.getIndex()] = true;                           
                         }else{
                             vehicle.getRoute().remove(v);
                         }    
                     }
                 }
            }
-       }       
+       }  
+        System.out.println(" Indexing Problem :  It is passed ");
        //missing
        boolean flag = false;
        for(Vertex v: vh.getRoute()){

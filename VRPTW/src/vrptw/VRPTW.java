@@ -128,7 +128,7 @@ public class VRPTW {
     Solution generateRandomIndividual(){
         
         Solution solution = new Solution(N); 
-        solution.vehicles = vehicles;
+//        solution.vehicles = vehicles;
 //        System.out.println("solution.vehicles.size(): "+solution.vehicles.size());
         
         for(Vehicle vh : solution.vehicles){

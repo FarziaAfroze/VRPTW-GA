@@ -90,5 +90,13 @@ public class Solution {
         return solution;
     }
     
+    
+    double cost(){ //ToDo
+        return 1;
+    }
+    
+    double fitness(){
+        return 1.0 / cost();
+    }
 }
 

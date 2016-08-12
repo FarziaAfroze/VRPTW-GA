@@ -185,6 +185,16 @@ public class VRPTW {
         return randomNum;
     }
     
+    ArrayList<Solution> crossover(Solution Pa, Solution Pb)
+    {
+        return null;
+    }
+    
+    Solution mutate(Solution s)
+    {
+        return null;
+    }
+    
     Solution geneticAlgorithm(){
         int populationSize = 100, totalIteration = 10;
         ArrayList<Solution> P = new ArrayList<Solution>();
@@ -212,7 +222,15 @@ public class VRPTW {
            }
            ArrayList<Solution> Q = new ArrayList<Solution>();
            for(int j = 0;j< populationSize/2;j++ ){
-               //add code here
+               Solution Pa = selectWithReplacement(P);
+               Solution Pb = selectWithReplacement(P);
+               
+               ArrayList<Solution> children = crossover(Pa, Pb);
+               Solution Ca = mutate(children.get(0));
+               Solution Cb = mutate(children.get(1));
+               
+               Q.add(Ca);
+               Q.add(Cb); 
            }
            P = Q;
         }

@@ -77,20 +77,29 @@ public class Solution {
         return true;
     } 
     
-    double cost(Solution solution){ //ToDo
-        double totalTime=0,time=0;
+    double cost(Solution solution){ 
+        double totalTime=0,time=0,penalty,waitingTime;
         Vertex u= null;
         for(Vehicle vh : solution.vehicles){            
             time =0;
-            for(Vertex v: vh.getRoute()){
+            for(Vertex v: vh.getRoute()){               
                 if(time == 0){
                     u = v;
-                }else{
+                }else{                    
                     time += calculateDistance(u, v);
+                    v.setArrivalTime(time);
                     u=v;                    
+                    if(time > v.getTimeWindow().getEndTime()){
+                        penalty = time - v.getTimeWindow().getEndTime();
+                        time += penalty;
+                    }else if(time < v.getTimeWindow().getStartTime()){
+                        waitingTime = v.getTimeWindow().getStartTime() - time;
+                        time += waitingTime;
+                    }
+                    time += v.getServiceTime();
                 }
             }
-            totalTime += time;
+            totalTime += time;            
         }
         return totalTime;
     }

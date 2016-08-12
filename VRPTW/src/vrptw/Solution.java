@@ -75,8 +75,8 @@ public class Solution {
             if(!vehicle.capacityConstraint()) return false;
         }
         return true;
-    }   
-    
+    } 
+        
     double cost(){ 
         double totalTime=0,time=0,penalty,waitingTime;
         Vertex u= null;

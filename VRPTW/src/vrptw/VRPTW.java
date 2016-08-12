@@ -167,6 +167,35 @@ public class VRPTW {
         return randomNum;
     }
     
+    Solution geneticAlgorithm(){
+        int populationSize = 100, totalIteration = 10;
+        ArrayList<Solution> P = new ArrayList<Solution>();
+        
+        //generate the first random population
+        for(int i =0; i< populationSize;i++){
+            while(true){
+                Solution s = generateRandomIndividual();
+                if(s != null)
+                {
+                    P.add(s);
+                    break;
+                }
+            } 
+        }
+        
+        Solution best = null;//stores the best solution so far
+        
+        for(int i = 0; i<totalIteration ; i++){
+           System.out.println("iteration "+i);
+           for(Solution Pi : P){//assess fitness and populate best
+               double fitness = Pi.fitness();
+               if(best == null || fitness > best.fitness())
+                   best = Pi;
+           }
+        }
+        return best;
+    }
+    
     public static void main(String[] args) {
         System.out.print("Hello");
         VRPTW vrptw = new VRPTW();

@@ -307,7 +307,7 @@ public class VRPTW {
        for(Vertex v: vh.getRoute()){
            flag = false;
            for(Vehicle vehicle:solution.vehicles){
-                if(solution.vehicles.indexOf(v) != -1){                   
+                if(vehicle.getRoute().indexOf(v) != -1){                   
                    flag = true;
                    break;
                 }
@@ -316,8 +316,9 @@ public class VRPTW {
                while(true){
                     int p =randInt(0, size-1);
                     Vehicle vha = solution.vehicles.get(p);
-                    Vertex depot = vha.getRoute().get(p);
-                    vha.getRoute().remove(depot);
+                    Vertex depot = vha.getRoute().get(vha.getRoute().size()-1);
+//                    vha.getRoute().remove(depot);
+                    vha.getRoute().remove(vha.getRoute().size()-1);
                     vha.getRoute().add(v);
                     vha.getRoute().add(depot);
 

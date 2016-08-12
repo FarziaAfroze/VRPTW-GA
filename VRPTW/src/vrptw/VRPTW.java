@@ -187,7 +187,22 @@ public class VRPTW {
     
     ArrayList<Solution> crossover(Solution Pa, Solution Pb)
     {
-        return null;
+        int threshold = 40;
+        int p = randInt(0, 100);
+        for(int i=0;i<Pa.vehicles.size();i++){
+            if(p > threshold){
+                Vehicle vha = Pa.vehicles.get(i) ; 
+                Vehicle vhb = Pb.vehicles.get(i) ; 
+                Pa.vehicles.set(i, Pb.vehicles.get(i));                
+                Pb.vehicles.set(i, vha);
+                handleError(Pb, vha);
+                handleError(Pa, vhb);
+            }
+        }
+        ArrayList<Solution> solutions = new ArrayList<Solution>();
+        solutions.add(Pa);
+        solutions.add(Pb);
+        return solutions;
     }
     
     Solution mutate(Solution s)
@@ -229,8 +244,8 @@ public class VRPTW {
         return null;
     }
     
-    Solution handleError(Solution solution, Vehicle vh){
-        return solution;
+    Solution handleError(Solution solution, Vehicle vh){       
+       return solution;        
     }
     
     Solution geneticAlgorithm(){

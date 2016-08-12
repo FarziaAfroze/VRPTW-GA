@@ -267,6 +267,7 @@ public class VRPTW {
        //missing
        boolean flag = false;
        for(Vertex v: vh.getRoute()){
+           flag = false;
            for(Vehicle vehicle:solution.vehicles){
                 if(solution.vehicles.indexOf(v) != -1){                   
                    flag = true;

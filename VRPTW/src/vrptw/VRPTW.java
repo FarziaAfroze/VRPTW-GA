@@ -138,7 +138,7 @@ public class VRPTW {
         for(Vertex v : vertices ){ 
             if(v.getIndex() > 0){  // ignore vertex at 0 which is depot
                while(true){
-                    int i= randInt(1, T-1);                
+                    int i= randInt(0, T-1);                
                     Vehicle vh = solution.vehicles.get(i);
                     vh.getRoute().add(v);
 //                    solution.vehicles.add(vh);

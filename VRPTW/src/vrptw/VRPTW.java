@@ -210,10 +210,7 @@ public class VRPTW {
         return null;
     }
     
-    Solution handleError(Solution solution, Vehicle vh){
-       for(){
-           
-       } 
+    Solution handleError(Solution solution, Vehicle vh){       
        return solution;        
     }
     

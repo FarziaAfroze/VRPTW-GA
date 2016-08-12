@@ -208,7 +208,8 @@ public class VRPTW {
                 handleError(Pb, vhb);
             }
         }
-        
+//        Pa = handleDuplicates(Pa);
+//        Pb = handleDuplicates(Pb);
         ArrayList<Solution> solutions = new ArrayList<Solution>();
         solutions.add(Pa);
         solutions.add(Pb);
@@ -252,34 +253,56 @@ public class VRPTW {
         }
         
         //handle error here
+//        s = handleDuplicates(s);
                 
-        return null;
+        return s;
+    }
+    Solution handleDuplicates(Solution solution, Vehicle vh){
+        
+//        int size = solution.vehicles.size();
+        boolean arr[] = new boolean[N+1];
+        for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
+           arr[v.getIndex()] = true;
+        }
+
+        for(Vehicle vehicle: solution.vehicles){
+           if(vh.getIndex() != vehicle.getIndex()){
+                ArrayList<Integer> toRemove = new ArrayList<Integer>();
+                int pos = -1;
+                for(Vertex v : vehicle.getRoute()){
+                    pos++;
+//                    System.out.println(" Indexing Problem : Hello  ");
+//                    System.out.println(" Indexing Problem :  "+v.getIndex());
+                    if(v.getIndex() != 0){
+                        if(!arr[v.getIndex()]){
+                            arr[v.getIndex()] = true;                           
+                        }else{
+                            toRemove.add(pos);
+//                            vehicle.getRoute().remove(v);
+                        }    
+                    }
+                }
+                
+                //
+                for(int index:toRemove){
+                    vehicle.getRoute().remove(index);
+                }
+           }
+       }
+        return solution;
     }
     
     Solution handleError(Solution solution, Vehicle vh){ 
        //duplicate
        int size = solution.vehicles.size();
-       boolean arr[] = new boolean[size+1];
-       for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
-           arr[v.getIndex()] = true;
-       }       
-       for(Vehicle vehicle: solution.vehicles){
-           if(vh.getIndex() != vehicle.getIndex()){
-                for(Vertex v : vehicle.getRoute()){
-                    System.out.println(" Indexing Problem : Hello  ");
-                    System.out.println(" Indexing Problem :  "+v.getIndex());
-                    if(v.getIndex() != 0){
-                        if(!arr[v.getIndex()]){
-                            arr[v.getIndex()] = true;                           
-                        }else{
-                            vehicle.getRoute().remove(v);
-                        }    
-                    }
-                }
-           }
-       }  
+//       boolean arr[] = new boolean[N+1];
+//       for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
+//           arr[v.getIndex()] = true;
+//       }       
+ 
+        solution= handleDuplicates(solution, vh);
         System.out.println(" Indexing Problem :  It is passed ");
-       //missing
+//       missing
        boolean flag = false;
        for(Vertex v: vh.getRoute()){
            flag = false;

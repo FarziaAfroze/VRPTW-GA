@@ -192,12 +192,17 @@ public class VRPTW {
                if(best == null || fitness > best.fitness())
                    best = Pi;
            }
+           ArrayList<Solution> Q = new ArrayList<Solution>();
+           for(int j = 0;j< populationSize/2;j++ ){
+               //add code here
+           }
+           P = Q;
         }
         return best;
     }
     
     public static void main(String[] args) {
-        System.out.print("Hello");
+//        System.out.print("Hello");
         VRPTW vrptw = new VRPTW();
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();

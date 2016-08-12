@@ -150,9 +150,8 @@ public class VRPTW {
                     int i= randInt(0, T-1);                
                     Vehicle vh = solution.vehicles.get(i);
                     vh.getRoute().add(v);
-//                    solution.vehicles.add(vh);
                     if( (solution.capacityConstraint() && solution.timeConstraint())){
-                        System.out.println("added vertex"+v.getIndex() +" at vehicle "+vh.getIndex());
+//                        System.out.println("added vertex"+v.getIndex() +" at vehicle "+vh.getIndex());
                        break;
                     } else{
                         solution.vehicles.get(i).getRoute().remove(v);
@@ -356,7 +355,6 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
-//        System.out.println(vrptw.generateRandomIndividual());
         vrptw.geneticAlgorithm();
     }
 

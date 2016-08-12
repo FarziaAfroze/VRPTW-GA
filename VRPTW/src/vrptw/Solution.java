@@ -83,7 +83,7 @@ public class Solution {
         for(Vehicle vh : vehicles){            
             time =0;
             for(Vertex v: vh.getRoute()){               
-                if(time == 0){
+                if(v.getIndex() == 0){
                     u = v;
                 }else{                    
                     time += calculateDistance(u, v);

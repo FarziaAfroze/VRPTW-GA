@@ -30,50 +30,51 @@ public class Solution {
         time and capacity constraints are maintained
         */
         return routesStartAndEndAtDepot() && uniquenessConstraint() 
-                && timeConstraint() && capacityConstraint();
+                && timeConstraint() 
+                && capacityConstraint();
     }
     boolean routesStartAndEndAtDepot(){
-        for(Vehicle vehicle : vehicles)
-        {
-            if(!vehicle.routesStartAndEndAtDepot()) return false;
-        }
+//        for(Vehicle vehicle : vehicles)
+//        {
+//            if(!vehicle.routesStartAndEndAtDepot()) return false;
+//        }
         return true;
     }
     boolean uniquenessConstraint(){
         
-        List<Boolean> isCovered= new ArrayList<Boolean>(Arrays.asList(new Boolean[totalVertex]));
-        Collections.fill(isCovered, Boolean.FALSE);
-        
-        for(Vehicle vehicle : vehicles)
-        {
-            if(vehicle.getIndex() == 0) isCovered.set(0, Boolean.TRUE);
-            else{
-                if(isCovered.get(vehicle.getIndex())== true) 
-                    return false;
-                isCovered.set(vehicle.getIndex(), Boolean.TRUE);
-            }
-                    
-        }
-        
-        for(boolean b :isCovered)
-        {
-            if(!b) return false;
-        }
+//        List<Boolean> isCovered= new ArrayList<Boolean>(Arrays.asList(new Boolean[totalVertex]));
+//        Collections.fill(isCovered, Boolean.FALSE);
+//        
+//        for(Vehicle vehicle : vehicles)
+//        {
+//            if(vehicle.getIndex() == 0) isCovered.set(0, Boolean.TRUE);
+//            else{
+//                if(isCovered.get(vehicle.getIndex())== true) 
+//                    return false;
+//                isCovered.set(vehicle.getIndex(), Boolean.TRUE);
+//            }
+//                    
+//        }
+//        
+//        for(boolean b :isCovered)
+//        {
+//            if(!b) return false;
+//        }
         
          return true;
     }
     boolean timeConstraint(){
-        for(Vehicle vehicle : vehicles)
-        {
-            if(!vehicle.timeConstraint()) return false;
-        }
+//        for(Vehicle vehicle : vehicles)
+//        {
+//            if(!vehicle.timeConstraint()) return false;
+//        }
         return true;
     }
     boolean capacityConstraint(){
-        for(Vehicle vehicle : vehicles)
-        {
-            if(!vehicle.capacityConstraint()) return false;
-        }
+//        for(Vehicle vehicle : vehicles)
+//        {
+//            if(!vehicle.capacityConstraint()) return false;
+//        }
         return true;
     } 
         

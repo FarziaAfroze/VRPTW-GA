@@ -7,6 +7,8 @@ package vrptw;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -195,7 +197,7 @@ public class VRPTW {
     
     ArrayList<Solution> crossover(Solution Pa, Solution Pb)
     {
-        int threshold = 40;
+        int threshold = 80;
         int p = randInt(0, 100);
         Vehicle vha=null,vhb=null;
         for(int i=0;i<Pa.vehicles.size();i++){
@@ -225,7 +227,7 @@ public class VRPTW {
                 {
                     //mutate this vetex with probabuility p
                     int p = randInt(1, 100);
-                    if(p>50)
+                    if(p>80)
                     {
                         //mutate:
                         //save the vertex position
@@ -325,7 +327,7 @@ public class VRPTW {
     }
     
     Solution geneticAlgorithm(){
-        int populationSize = 4, totalIteration = 1;
+        int populationSize = 100, totalIteration = 1;
         ArrayList<Solution> P = new ArrayList<Solution>();
 
         //generate the first random population
@@ -369,15 +371,26 @@ public class VRPTW {
            P = Q;
         }
         return best;
-    }
+    }    
+
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 //        System.out.print("Hello");
         VRPTW vrptw = new VRPTW();
-        vrptw.readInput("R101.txt");
+        String filename = "R101.txt";
+        vrptw.readInput("solomon_25/"+filename);
         vrptw.initVehicles();
         vrptw.initEdges();
         vrptw.geneticAlgorithm();
+        Solution optimalSolution = vrptw.geneticAlgorithm();
+        System.out.println("Optimal Solution: "+optimalSolution);
+        System.out.println("Cost: "+optimalSolution.cost());
+        
+        PrintWriter writer = new PrintWriter("Output/"+filename, "UTF-8");
+        
+        writer.println("Optimal Solution: "+optimalSolution);
+        writer.println("Cost: "+optimalSolution.cost());
+        writer.close();
     }
 
 }

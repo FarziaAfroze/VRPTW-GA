@@ -204,8 +204,8 @@ public class VRPTW {
                 vhb = Pb.vehicles.get(i) ; 
                 Pa.vehicles.set(i, vhb);                
                 Pb.vehicles.set(i, vha); 
-                handleError(Pa, vha);
-                handleError(Pb, vhb);
+                Pa = handleError(Pa, vha);
+                Pb = handleError(Pb, vhb);
             }
         }
 //        Pa = handleDuplicates(Pa);
@@ -248,7 +248,7 @@ public class VRPTW {
                 }
             }
             
-            handleError(s,vehicle);
+            s = handleError(s,vehicle);
             
         }
         
@@ -271,14 +271,11 @@ public class VRPTW {
                 int pos = -1;
                 for(Vertex v : vehicle.getRoute()){
                     pos++;
-//                    System.out.println(" Indexing Problem : Hello  ");
-//                    System.out.println(" Indexing Problem :  "+v.getIndex());
                     if(v.getIndex() != 0){
                         if(!arr[v.getIndex()]){
                             arr[v.getIndex()] = true;                           
                         }else{
                             toRemove.add(pos);
-//                            vehicle.getRoute().remove(v);
                         }    
                     }
                 }
@@ -293,33 +290,30 @@ public class VRPTW {
     }
     
     Solution handleError(Solution solution, Vehicle vh){ 
-       //duplicate
-       int size = solution.vehicles.size();
-//       boolean arr[] = new boolean[N+1];
-//       for(Vertex v:solution.vehicles.get(vh.getIndex()).getRoute()){
-//           arr[v.getIndex()] = true;
-//       }       
- 
         solution= handleDuplicates(solution, vh);
-        System.out.println(" Indexing Problem :  It is passed ");
+        
 //       missing
+        int size = solution.vehicles.size();
        boolean flag = false;
        for(Vertex v: vh.getRoute()){
+           
            flag = false;
            for(Vehicle vehicle:solution.vehicles){
-                if(solution.vehicles.indexOf(v) != -1){                   
+                if(vehicle.getRoute().indexOf(v) != -1){                   
                    flag = true;
                    break;
                 }
            }
            if(!flag){
                while(true){
+//                   System.out.println(" Indexing Problem :  It is passed ");
                     int p =randInt(0, size-1);
                     Vehicle vha = solution.vehicles.get(p);
-                    Vertex depot = vha.getRoute().get(p);
-                    vha.getRoute().remove(depot);
+                    Vertex depot = vha.getRoute().get(vha.getRoute().size()-1);
+//                    vha.getRoute().remove(depot);
+                    vha.getRoute().remove(vha.getRoute().size()-1);
                     vha.getRoute().add(v);
-                    vha.getRoute().add(depot);
+                    vha.getRoute().add(depot);  
 
                     if(solution.checkConstraints()){
                         break;
@@ -331,7 +325,7 @@ public class VRPTW {
     }
     
     Solution geneticAlgorithm(){
-        int populationSize = 4, totalIteration = 10;
+        int populationSize = 4, totalIteration = 1;
         ArrayList<Solution> P = new ArrayList<Solution>();
 
         //generate the first random population

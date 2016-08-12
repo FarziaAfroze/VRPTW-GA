@@ -60,12 +60,13 @@ public class Vehicle {
         return capacity >= totalQuantity;   
     }
     
-    boolean timeConstraint(){//ToDo
+    boolean timeConstraint(){
         if(route == null) return false;
-        
-        Vertex finalVertex = route.get(route.size()-1);
-        return finalVertex.getArrivalTime()
-                <= finalVertex.getTimeWindow().getEndTime();
+        for(Vertex v:route){
+            if(v.getArrivalTime() > v.getTimeWindow().getEndTime())
+                return false;
+        }
+        return true;
     }
     
     boolean routesStartAndEndAtDepot(){

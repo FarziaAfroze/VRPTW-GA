@@ -128,7 +128,14 @@ public class VRPTW {
     Solution generateRandomIndividual(){
         
         Solution solution = new Solution(N); 
-//        solution.vehicles = vehicles;
+        for(int i=0; i < T;i++)
+        {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setIndex(i);
+            vehicle.setCapacity(vehicleCapacity);
+            solution.vehicles.add(vehicle);
+        }
+
 //        System.out.println("solution.vehicles.size(): "+solution.vehicles.size());
         
         for(Vehicle vh : solution.vehicles){
@@ -141,8 +148,8 @@ public class VRPTW {
                     int i= randInt(0, T-1);                
                     Vehicle vh = solution.vehicles.get(i);
                     vh.getRoute().add(v);
-//                    solution.vehicles.add(vh);
                     if( (solution.capacityConstraint() && solution.timeConstraint())){
+//                        System.out.println("added vertex"+v.getIndex() +" at vehicle "+vh.getIndex());
                        break;
                     } else{
                         solution.vehicles.get(i).getRoute().remove(v);
@@ -179,7 +186,8 @@ public class VRPTW {
         return solutions.get(t);
     }
     
-    int randInt(int min, int max) {   
+    int randInt(int min, int max) {
+        System.out.println("Max :  "+max+"   Min:"+ min);
         Random rand =  new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
@@ -226,8 +234,7 @@ public class VRPTW {
                         
                         //if the new vertex is not already present in route
                         if(vehicle.getRoute().indexOf(newVertex)== -1 ){
-                            //2.remove this vertex from route
-                            vehicle.getRoute().remove(vertex);
+                            
                             //replace it with new vertex
                             vehicle.getRoute().set(vertexPosition, 
                                 vertices.get(newVertexIndex));
@@ -237,6 +244,9 @@ public class VRPTW {
                     }
                 }
             }
+            
+            handleError(s,vehicle);
+            
         }
         
         //handle error here
@@ -254,11 +264,13 @@ public class VRPTW {
        for(Vehicle vehicle: solution.vehicles){
            if(vh.getIndex() != vehicle.getIndex()){
                 for(Vertex v : vehicle.getRoute()){
-                    if(!arr[v.getIndex()]){
-                        arr[v.getIndex()] = true;
-                    }else{
-                        vehicle.getRoute().remove(v);
-                    }             
+                    if(v.getIndex() != 0){
+                        if(!arr[v.getIndex()]){
+                            arr[v.getIndex()] = true;
+                        }else{
+                            vehicle.getRoute().remove(v);
+                        }    
+                    }
                 }
            }
        }       
@@ -291,13 +303,18 @@ public class VRPTW {
     }
     
     Solution geneticAlgorithm(){
-        int populationSize = 5, totalIteration = 10;
+        int populationSize = 4, totalIteration = 10;
         ArrayList<Solution> P = new ArrayList<Solution>();
         
         //generate the first random population
         for(int i =0; i< populationSize;i++){
+            System.out.println("creating individual "+i);
             while(true){
+                System.out.println("trying...");
+                System.out.println("++++++++++++++++++++++++++++++++");
                 Solution s = generateRandomIndividual();
+                System.out.println(s);
+                System.out.println("++++++++++++++++++++++++++++++++");
                 if(s != null)
                 {
                     P.add(s);
@@ -315,6 +332,7 @@ public class VRPTW {
                if(best == null || fitness > best.fitness())
                    best = Pi;
            }
+           System.out.println("best: " + best);
            ArrayList<Solution> Q = new ArrayList<Solution>();
            for(int j = 0;j< populationSize/2;j++ ){
                Solution Pa = selectWithReplacement(P);
@@ -338,7 +356,6 @@ public class VRPTW {
         vrptw.readInput("R101.txt");
         vrptw.initVehicles();
         vrptw.initEdges();
-        //System.out.println(vrptw.generateRandomIndividual());
         vrptw.geneticAlgorithm();
     }
 

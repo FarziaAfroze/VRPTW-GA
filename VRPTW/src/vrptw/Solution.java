@@ -77,6 +77,35 @@ public class Solution {
         return true;
     } 
     
+    double cost(Solution solution){ //ToDo
+        double totalTime=0,time=0;
+        Vertex u= null;
+        for(Vehicle vh : solution.vehicles){            
+            time =0;
+            for(Vertex v: vh.getRoute()){
+                if(time == 0){
+                    u = v;
+                }else{
+                    time += calculateDistance(u, v);
+                    u=v;                    
+                }
+            }
+            totalTime += time;
+        }
+        return totalTime;
+    }
+    
+    double calculateDistance(Vertex start,Vertex end){
+        double distance = Math.sqrt(
+                               (start.getCoord_x()-end.getCoord_x())*(start.getCoord_x()-end.getCoord_x())
+                             + (start.getCoord_y()-end.getCoord_y())*(start.getCoord_y()-end.getCoord_y()));
+        return distance;    
+    }
+    
+    double fitness(Solution solution){
+        return 1.0 / cost(solution);
+    }
+    
     @Override
     public String toString() {
         String solution="";
@@ -88,15 +117,6 @@ public class Solution {
             solution += "\n";
         }
         return solution;
-    }
-    
-    
-    double cost(){ //ToDo
-        return 1;
-    }
-    
-    double fitness(){
-        return 1.0 / cost();
     }
 }
 
